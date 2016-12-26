@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liamlee.github.io/"/>
-  <updated>2016-12-26T07:52:10.000Z</updated>
+  <updated>2016-12-26T08:04:12.000Z</updated>
   <id>https://liamlee.github.io/</id>
   
   <author>
@@ -20,10 +20,9 @@
     <link href="https://liamlee.github.io/2016/12/26/Hue-Install/"/>
     <id>https://liamlee.github.io/2016/12/26/Hue-Install/</id>
     <published>2016-12-26T07:37:29.000Z</published>
-    <updated>2016-12-26T07:52:10.000Z</updated>
+    <updated>2016-12-26T08:04:12.000Z</updated>
     
-    <content type="html"><![CDATA[<p>[TOC]</p>
-<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><pre><code>* JDK
+    <content type="html"><![CDATA[<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><pre><code>* JDK
 * Maven
 * Git（用于从github下载Hue）     
 * 库包依赖：参考Hue的githu主页 [Hue](https://github.com/cloudera/hue) 所列的所有依赖，一一检查安装
@@ -32,19 +31,18 @@
 <h3 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h3><pre><code>git clone https://github.com/cloudera/hue.git (brach)
 cd hue
 make apps
-</code></pre><h2 id="make过程时间会比较长，只要前面所提的依赖都已安装好，整个过程一般不会出现错误，耐心等待即可"><a href="#make过程时间会比较长，只要前面所提的依赖都已安装好，整个过程一般不会出现错误，耐心等待即可" class="headerlink" title="make过程时间会比较长，只要前面所提的依赖都已安装好，整个过程一般不会出现错误，耐心等待即可"></a>make过程时间会比较长，只要前面所提的依赖都已安装好，整个过程一般不会出现错误，耐心等待即可</h2><h3 id="初步验证"><a href="#初步验证" class="headerlink" title="初步验证"></a>初步验证</h3><ul>
+</code></pre><p>make过程时间会比较长，只要前面所提的依赖都已安装好，整个过程一般不会出现错误，耐心等待即可</p>
+<h3 id="初步验证"><a href="#初步验证" class="headerlink" title="初步验证"></a>初步验证</h3><ul>
 <li>在后台启动服务 <code>build/env/bin/hue runserver</code></li>
 </ul>
 <ul>
-<li>访问<a href="http://localhost:8000。正常情况，后台出现以下信息，前台出现登录界面。" target="_blank" rel="external">http://localhost:8000。正常情况，后台出现以下信息，前台出现登录界面。</a></li>
+<li>访问<a href="http://localhost:8000。正常情况，前台出现登录界面。" target="_blank" rel="external">http://localhost:8000。正常情况，前台出现登录界面。</a></li>
 </ul>
-<p><img src="/var/folders/_x/hf9kmwyn20n8v_8pcb5dx2sr0000gn/T/net.shinyfrog.bear/BearTemp.XSY1Kh/CA33ED45-0450-46BE-94CA-5479F6480928.png" alt="CA33ED45-0450-46BE-94CA-5479F6480928"></p>
-<p><img src="/var/folders/_x/hf9kmwyn20n8v_8pcb5dx2sr0000gn/T/net.shinyfrog.bear/BearTemp.o63InJ/4E39BEFC-0DB0-4552-81F4-70013B0BEC02.png" alt="4E39BEFC-0DB0-4552-81F4-70013B0BEC02"></p>
 <ul>
 <li>Hue初始界面没有用户注册选项，直接根据用户的的输入创建第一个超级用户，后续建立用户分配权限都依赖该用户，所以需要特别注意，务必记住自己输入了什么。</li>
 </ul>
 <hr>
-<h3 id="配置Hue"><a href="#配置Hue" class="headerlink" title="配置Hue"></a>配置Hue</h3><p>在完成安装和初步验证后，现在进入最重要也是最复杂的步骤，配置。<br>Hue支持Hadoop生态系统中的各种组建，比如访问HDFS文件、执行SQL查询HBase中的表、编写notebook来运行spark，前提是要做好对应的配置。</p>
+<h3 id="配置Hue"><a href="#配置Hue" class="headerlink" title="配置Hue"></a>配置Hue</h3><p>在完成安装和初步验证后，现在进入最重要也是最复杂的步骤，配置。Hue支持Hadoop生态系统中的各种组建，比如访问HDFS文件、执行SQL查询HBase中的表、编写notebook来运行spark，前提是要做好对应的配置。</p>
 <p><strong>配置文件</strong><br>从github下载的开发版，配置文件为 <code>desktop/conf/pseudo-distributed.ini</code> ,如果是其他发行版请参考 <a href="http://gethue.com/how-to-configure-hue-in-your-hadoop-cluster/" target="_blank" rel="external">官方文档</a> 。</p>
 <h4 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h4><pre><code>[beeswax]
   # Host where HiveServer2 is running. 
@@ -54,12 +52,14 @@ make apps
 <h4 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h4><p>首先修改Hadoop配置文件，增加WebHDFS功能，支持通过web访问HDFS</p>
 <ul>
 <li><p>hdfs-site.xml </p>
-  <property><br>    <name>dfs.webhdfs.enabled</name><br>    <value>true</value><br>  </property></li>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.webhdfs.enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
 </ul>
 <ul>
-<li>core-site.xml</li>
-</ul>
+<li><p>core-site.xml</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.hue.hosts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.hue.groups<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
 <p>然后对接Hue配置，如果Hue与NameNode在同一台机器，保持默认即可。</p>
 <pre><code>[[hdfs_clusters]]
     # HA support by using HttpFs
@@ -77,19 +77,22 @@ make apps
 </code></pre><h4 id="Yarn"><a href="#Yarn" class="headerlink" title="Yarn"></a>Yarn</h4><p>监控Job，需要配置ProxyServer 和 Job History servers。<br>首先，Hadoop侧的配置修改</p>
 <ul>
 <li><p>mapred-site.xml (<em>Job History servers</em>)</p>
-<p>  <property></property></p>
-<pre><code>&lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
-&lt;value&gt;${your-host}:19888&lt;/value&gt;
-</code></pre><p>  <br>启动Job History server服务<br>  mr-jobhistory-daemon.sh start historyserver</p>
+<pre><code>&lt;property&gt;
+    &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
+    &lt;value&gt;${your-host}:19888&lt;/value&gt;
+&lt;/property&gt;
+</code></pre><p>启动Job History server服务</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mr-jobhistory-daemon<span class="selector-class">.sh</span> start historyserver</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
-<li>yarn-site.xml (<em>ProxyServer</em>)</li>
-</ul>
+<li><p>yarn-site.xml (<em>ProxyServer</em>)</p>
 <figure class="highlight dust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>$<span class="template-variable">&#123;your-host&#125;</span><span class="xml">:8088<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.web-proxy.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>$<span class="template-variable">&#123;your-host&#125;</span><span class="xml">:8888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>启动ProxyServer服务</p>
-<pre><code>yarn-daemon.sh start proxyserver
-</code></pre><p>对接Hue配置</p>
+<p>启动ProxyServer服务    </p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn-daemon<span class="selector-class">.sh</span> start proxyserver</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>对接Hue配置</p>
 <pre><code>[hadoop]
   [[yarn_clusters]]
     [[[default]]]
@@ -115,6 +118,7 @@ make apps
  hbase_clusters=(Cluster|your-host:9090)
 </code></pre><p>然后，务必记得在HMaster所在主机启动Thrift服务<br>    hbase thrift start &amp;</p>
 <h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>更新中……</p>
+<hr>
 <h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><ol>
 <li><a href="http://gethue.com/how-to-configure-hue-in-your-hadoop-cluster/" target="_blank" rel="external">how-to-configure-hue-in-your-hadoop-cluster</a></li>
 <li><a href="https://github.com/cloudera/hue" target="_blank" rel="external">Hue-Github</a></li>
@@ -124,11 +128,10 @@ make apps
     
     <summary type="html">
     
-      &lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h3 id=&quot;基础&quot;&gt;&lt;a href=&quot;#基础&quot; class=&quot;headerlink&quot; title=&quot;基础&quot;&gt;&lt;/a&gt;基础&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;* JDK
+      &lt;h3 id=&quot;基础&quot;&gt;&lt;a href=&quot;#基础&quot; class=&quot;headerlink&quot; title=&quot;基础&quot;&gt;&lt;/a&gt;基础&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;* JDK
 * Maven
 * Git（用于从github下载Hue）     
-* 库包依赖：参
+* 库包依赖：参考Hue的githu主页 
     
     </summary>
     
