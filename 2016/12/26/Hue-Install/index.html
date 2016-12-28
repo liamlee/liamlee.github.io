@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Ming 的碎碎念"><title>Hue 安装配置 | Liamming</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Hue 安装配置</h1><a id="logo" href="/.">Liamming</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Hue 安装配置</h1><div class="post-meta">Dec 26, 2016<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2016/12/26/Hue-Install/" href="/2016/12/26/Hue-Install/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><pre><code>* JDK
-* Maven
-* Git（用于从github下载Hue）     
-* 库包依赖：参考Hue的githu主页 [Hue](https://github.com/cloudera/hue) 所列的所有依赖，一一检查安装
-* 集群嘛，当然我认为你已经搭建好了
-</code></pre><hr>
-<h3 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h3><pre><code>git clone https://github.com/cloudera/hue.git (brach)
-cd hue
-make apps
-</code></pre><p>make过程时间会比较长，只要前面所提的依赖都已安装好，整个过程一般不会出现错误，耐心等待即可</p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Ming 的碎碎念"><title>Hue 安装配置 | Liamming</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Hue 安装配置</h1><a id="logo" href="/.">Liamming</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Hue 安装配置</h1><div class="post-meta">Dec 26, 2016<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2016/12/26/Hue-Install/" href="/2016/12/26/Hue-Install/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<li>JDK</li>
+<li>Maven</li>
+<li>Git（用于从github下载Hue） </li>
+<li>集群嘛，当然我认为你已经搭建好了</li>
+<li>库包依赖：参考Hue的githu主页 <a href="https://github.com/cloudera/hue" target="_blank" rel="external">Hue</a> 所列的所有依赖，一一检查安装</li>
+</ul>
+<hr>
+<h3 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/cloudera/hue.git (brach)</div><div class="line">cd hue</div><div class="line">make apps</div></pre></td></tr></table></figure>
+<p>make过程时间会比较长，只要前面所提的依赖都已安装好，整个过程一般不会出现错误，耐心等待即可</p>
 <h3 id="初步验证"><a href="#初步验证" class="headerlink" title="初步验证"></a>初步验证</h3><ul>
 <li>在后台启动服务 <code>build/env/bin/hue runserver</code></li>
 </ul>
@@ -19,12 +19,9 @@ make apps
 </ul>
 <hr>
 <h3 id="配置Hue"><a href="#配置Hue" class="headerlink" title="配置Hue"></a>配置Hue</h3><p>在完成安装和初步验证后，现在进入最重要也是最复杂的步骤，配置。Hue支持Hadoop生态系统中的各种组建，比如访问HDFS文件、执行SQL查询HBase中的表、编写notebook来运行spark，前提是要做好对应的配置。</p>
-<p><strong>配置文件</strong><br>从github下载的开发版，配置文件为 <code>desktop/conf/pseudo-distributed.ini</code> ,如果是其他发行版请参考 <a href="http://gethue.com/how-to-configure-hue-in-your-hadoop-cluster/" target="_blank" rel="external">官方文档</a> 。</p>
-<h4 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h4><pre><code>[beeswax]
-  # Host where HiveServer2 is running. 
-    #如果Hue与Hive不在同一台服务器，需要修改指定正确的Hive服务主机.
-  hive_server_host=localhost
-</code></pre><p>有些朋友说“我从来不用Hive”，但是Hue执行交互式SQL查询是通过Hive完成的，所以还是建议乖乖的安装配置好Hive在你的集群中吧，至于怎么安装Hive不在此赘述。</p>
+<p><strong>配置文件</strong><br>从github下载的开发版，配置文件为 <strong><em>desktop/conf/pseudo-distributed.ini</em></strong> ,如果是其他发行版请参考 <a href="http://gethue.com/how-to-configure-hue-in-your-hadoop-cluster/" target="_blank" rel="external">官方文档</a> 。</p>
+<h4 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[beeswax]</div><div class="line">  # Host where HiveServer2 is running. </div><div class="line">  # 如果Hue与Hive不在同一台服务器，需要修改指定正确的Hive服务主机.</div><div class="line">  hive_server_host=localhost</div></pre></td></tr></table></figure>
+<p>有些朋友说“我从来不用Hive”，但是Hue执行交互式SQL查询是通过Hive完成的，所以还是建议乖乖的安装配置好Hive在你的集群中吧，至于怎么安装Hive不在此赘述。</p>
 <h4 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h4><p>首先修改Hadoop配置文件，增加WebHDFS功能，支持通过web访问HDFS</p>
 <ul>
 <li><p>hdfs-site.xml </p>
@@ -37,62 +34,30 @@ make apps
 </li>
 </ul>
 <p>然后对接Hue配置，如果Hue与NameNode在同一台机器，保持默认即可。</p>
-<pre><code>[[hdfs_clusters]]
-    # HA support by using HttpFs
-    [[[default]]]
-      # Enter the filesystem uri
-      fs_defaultfs=hdfs://node1:8020
-
-      # Use WebHdfs/HttpFs as the communication mechanism.
-      # Domain should be the NameNode or HttpFs host.
-      # Default port is 14000 for HttpFs.
-       webhdfs_url=http://node1:50070/webhdfs/v1
-</code></pre><p>另外一点需特别注意的，为了获取HDFS访问权限，务必指定Hadoop用户</p>
-<pre><code># This should be the hadoop cluster admin
-   default_hdfs_superuser=your-user
-</code></pre><h4 id="Yarn"><a href="#Yarn" class="headerlink" title="Yarn"></a>Yarn</h4><p>监控Job，需要配置ProxyServer 和 Job History servers。<br>首先，Hadoop侧的配置修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[[hdfs_clusters]]</div><div class="line">    # HA support by using HttpFs</div><div class="line">    [[[default]]]</div><div class="line">      # Enter the filesystem uri</div><div class="line">      fs_defaultfs=hdfs://node1:8020</div><div class="line"></div><div class="line">      # Use WebHdfs/HttpFs as the communication mechanism.</div><div class="line">      # Domain should be the NameNode or HttpFs host.</div><div class="line">      # Default port is 14000 for HttpFs.</div><div class="line">       webhdfs_url=http://node1:50070/webhdfs/v1</div></pre></td></tr></table></figure>
+<p>另外一点需特别注意的，为了获取HDFS访问权限，务必指定Hadoop用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># This should be the hadoop cluster admin</div><div class="line">   default_hdfs_superuser=your-user</div></pre></td></tr></table></figure>
+<h4 id="Yarn"><a href="#Yarn" class="headerlink" title="Yarn"></a>Yarn</h4><p>监控Job，需要配置ProxyServer 和 Job History servers。<br>首先，Hadoop侧的配置修改</p>
 <ul>
 <li><p>mapred-site.xml (<em>Job History servers</em>)</p>
-<pre><code>&lt;property&gt;
-    &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
-    &lt;value&gt;${your-host}:19888&lt;/value&gt;
-&lt;/property&gt;
-</code></pre><p>启动Job History server服务</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mr-jobhistory-daemon<span class="selector-class">.sh</span> start historyserver</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>$&#123;your-host&#125;:19888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>启动Job History server服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mr-jobhistory-daemon.sh start historyserver</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
 <li><p>yarn-site.xml (<em>ProxyServer</em>)</p>
-<figure class="highlight dust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>$<span class="template-variable">&#123;your-host&#125;</span><span class="xml">:8088<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.web-proxy.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>$<span class="template-variable">&#123;your-host&#125;</span><span class="xml">:8888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>$&#123;your-host&#125;:8088<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.web-proxy.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>$&#123;your-host&#125;:8888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>启动ProxyServer服务    </p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn-daemon<span class="selector-class">.sh</span> start proxyserver</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn-daemon.sh start proxyserver</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>对接Hue配置</p>
-<pre><code>[hadoop]
-  [[yarn_clusters]]
-    [[[default]]]
-      # Enter the host on which you are running the ResourceManager
-      resourcemanager_host=your-host     
-
-      # Whether to submit jobs to this cluster
-      submit_to=True
-
-      # URL of the ResourceManager API
-      resourcemanager_api_url=http://your-host:8088
-
-      # URL of the ProxyServer API
-      proxy_api_url=http://your-host:8088
-
-      # URL of the HistoryServer API
-      history_server_api_url=http://your-host:19888
-</code></pre><p>好了，现在你可以Job Browser浏览所有运行的Job并查看日志。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[hadoop]</div><div class="line">  [[yarn_clusters]]</div><div class="line">    [[[default]]]</div><div class="line">      # Enter the host on which you are running the ResourceManager</div><div class="line">      resourcemanager_host=your-host     </div><div class="line">      # Whether to submit jobs to this cluster</div><div class="line">      submit_to=True</div><div class="line">      # URL of the ResourceManager API</div><div class="line">      resourcemanager_api_url=http://your-host:8088</div><div class="line">      # URL of the ProxyServer API</div><div class="line">      proxy_api_url=http://your-host:8088</div><div class="line">      # URL of the HistoryServer API</div><div class="line">      history_server_api_url=http://your-host:19888</div></pre></td></tr></table></figure>
+<p>好了，现在你可以Job Browser浏览所有运行的Job并查看日志。</p>
 <h4 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h4><p>HBase配置相对简单，只要指定HBase服务的host即可</p>
-<pre><code>[hbase]
-# Comma-separated list of HBase Thrift server 1 for clusters in the format of
- &apos;(name|host:port)&apos;.
- hbase_clusters=(Cluster|your-host:9090)
-</code></pre><p>然后，务必记得在HMaster所在主机启动Thrift服务<br>    hbase thrift start &amp;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[hbase]</div><div class="line"># Comma-separated list of HBase Thrift server 1 for clusters in the format of</div><div class="line"> &apos;(name|host:port)&apos;.</div><div class="line">hbase_clusters=(Cluster|your-host:9090)</div></pre></td></tr></table></figure>
+<p>然后，务必记得在HMaster所在主机启动Thrift服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hbase thrift start &amp;</div></pre></td></tr></table></figure></p>
 <h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>更新中……</p>
 <hr>
 <h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><ol>
@@ -100,7 +65,7 @@ make apps
 <li><a href="https://github.com/cloudera/hue" target="_blank" rel="external">Hue-Github</a></li>
 <li><a href="http://livy.io/quickstart.html" target="_blank" rel="external">Livy, an Open Source REST Service for Apache Spark</a> </li>
 </ol>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://liamlee.github.io/2016/12/26/Hue-Install/" data-id="cix5ssu940000f9s6628mzqxd" class="article-share-link">分享到</a><div class="tags"><a href="/tags/大数据/">大数据</a><a href="/tags/Hue/">Hue</a></div><div class="post-nav"><a href="/2016/11/08/read-xianyirenXdexianshen/" class="next">读《嫌疑人X的献身》</a></div><div id="disqus_thread"><script>var disqus_shortname = 'liamming1990';
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://liamlee.github.io/2016/12/26/Hue-Install/" data-id="cix8bf5td0000cps6k9dqbch8" class="article-share-link">分享到</a><div class="tags"><a href="/tags/大数据/">大数据</a><a href="/tags/Hue/">Hue</a></div><div class="post-nav"><a href="/2016/11/08/read-xianyirenXdexianshen/" class="next">读《嫌疑人X的献身》</a></div><div id="disqus_thread"><script>var disqus_shortname = 'liamming1990';
 var disqus_identifier = '2016/12/26/Hue-Install/';
 var disqus_title = 'Hue 安装配置';
 var disqus_url = 'https://liamlee.github.io/2016/12/26/Hue-Install/';
