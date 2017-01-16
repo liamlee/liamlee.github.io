@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liamlee.github.io/"/>
-  <updated>2016-12-29T11:46:15.000Z</updated>
+  <updated>2017-01-16T10:47:30.000Z</updated>
   <id>https://liamlee.github.io/</id>
   
   <author>
@@ -14,6 +14,77 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>斯坦福(吴恩达)-机器学习-第二周编程作业代码笔记</title>
+    <link href="https://liamlee.github.io/2017/01/16/linearRegression/"/>
+    <id>https://liamlee.github.io/2017/01/16/linearRegression/</id>
+    <published>2017-01-16T10:38:27.000Z</published>
+    <updated>2017-01-16T10:47:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="假设函数"><a href="#假设函数" class="headerlink" title="假设函数"></a>假设函数</h4><p>以下编程逻辑基于此处定义的假设函数<br>$$<br>h_\theta(x) = \theta^T\vec x<br>$$</p>
+<p>$$<br>h_\theta(x) = \theta_0 + \theta_1x<br>$$</p>
+<h4 id="computeCost"><a href="#computeCost" class="headerlink" title="computeCost"></a>computeCost</h4><p>回归问题中，通常选用Square error function<br>$$<br>J(\theta) = \frac{1} {2m}\sum<em>{i=1}^m(h</em>\theta(x^{(i)}) - y^{(i)})^2<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">function J = computeCost(X, y, theta)</div><div class="line">%COMPUTECOST Compute cost for linear regression</div><div class="line">%   J = COMPUTECOST(X, y, theta) computes the cost of using theta as the</div><div class="line">%   parameter for linear regression to fit the data points in X and y</div><div class="line"></div><div class="line">% Initialize some useful values</div><div class="line">m = length(y); % number of training examples</div><div class="line"></div><div class="line">% You need to return the following variables correctly </div><div class="line">J = 0;</div><div class="line"></div><div class="line">% ====================== YOUR CODE HERE ======================</div><div class="line">% Instructions: Compute the cost of a particular choice of theta</div><div class="line">%               You should set J to the cost.</div><div class="line">h = theta&apos; .* X ;</div><div class="line">J = sum((h(:,1) + h(:,2) - y) .^ 2) / m / 2 ;</div><div class="line"></div><div class="line">% =========================================================================</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
+<h4 id="computeCost-多维"><a href="#computeCost-多维" class="headerlink" title="computeCost-多维"></a>computeCost-多维</h4><p>多维情况下，为了更直观的指导编程，我们可以对函数表达式做一下改写<br>$$<br>J(\theta) = \frac{1}{2m}(X\theta - \vec y)^T(X\theta - \vec y)<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">function J = computeCostMulti(X, y, theta)</div><div class="line">%COMPUTECOSTMULTI Compute cost for linear regression with multiple variables</div><div class="line">%   J = COMPUTECOSTMULTI(X, y, theta) computes the cost of using theta as the</div><div class="line">%   parameter for linear regression to fit the data points in X and y</div><div class="line"></div><div class="line">% Initialize some useful values</div><div class="line">m = length(y); % number of training examples</div><div class="line"></div><div class="line">% You need to return the following variables correctly </div><div class="line">J = 0;</div><div class="line"></div><div class="line">% ====================== YOUR CODE HERE ======================</div><div class="line">% Instructions: Compute the cost of a particular choice of theta</div><div class="line">%               You should set J to the cost.</div><div class="line">% J = 1/(2*m) * (theta * X&apos; - y)&apos;(theta * X&apos; - y)</div><div class="line">h = theta&apos; .* X ;</div><div class="line">s = size(h,2);</div><div class="line">j = h(:,1);</div><div class="line"></div><div class="line">for i = 2:s</div><div class="line">  j = j + h(:,i);</div><div class="line">end</div><div class="line"></div><div class="line">j = j - y;</div><div class="line"></div><div class="line">J = sum(sum(j&apos; * j)) / m / 2;</div><div class="line">% =========================================================================</div><div class="line">end</div></pre></td></tr></table></figure>
+<h4 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h4><p>批量梯度下降迭代过程中，每次迭代同时更新所有<em>theta</em>，并且使用所有训练样本<br>$$<br>\theta_j := \theta<em>j - \alpha\frac1m\sum</em>{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">function [theta, J_history] = gradientDescent(X, y, theta, alpha, num_iters)</div><div class="line">%GRADIENTDESCENT Performs gradient descent to learn theta</div><div class="line">%   theta = GRADIENTDESCENT(X, y, theta, alpha, num_iters) updates theta by </div><div class="line">%   taking num_iters gradient steps with learning rate alpha</div><div class="line"></div><div class="line">% Initialize some useful values</div><div class="line">m = length(y); % number of training examples</div><div class="line">J_history = zeros(num_iters, 1);</div><div class="line"></div><div class="line">for iter = 1:num_iters</div><div class="line">    % ====================== YOUR CODE HERE ======================</div><div class="line">    % Instructions: Perform a single gradient step on the parameter vector</div><div class="line">    %               theta. </div><div class="line">    %</div><div class="line">    % Hint: While debugging, it can be useful to print out the values</div><div class="line">    %       of the cost function (computeCost) and gradient here.</div><div class="line">    %</div><div class="line">    h = theta&apos; .* X ;</div><div class="line"></div><div class="line">    theta(1) = theta(1) - sum((h(:,1) + h(:,2) - y)&apos; * X(:,1)) * alpha / m;</div><div class="line">    theta(2) = theta(2) - sum((h(:,1) + h(:,2) - y)&apos; * X(:,2)) * alpha / m;</div><div class="line"></div><div class="line">    % ============================================================</div><div class="line"></div><div class="line">    % Save the cost J in every iteration    </div><div class="line">    J_history(iter) = computeCost(X, y, theta);</div><div class="line">end</div></pre></td></tr></table></figure>
+<h4 id="梯度下降-多维"><a href="#梯度下降-多维" class="headerlink" title="梯度下降-多维"></a>梯度下降-多维</h4><p>多维与前面特殊情况一样，需要注意的在编写程序时确保能支持任意维度的求解，而不是前面固定只求<em>theta1</em>、<em>theta2</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">function [theta, J_history] = gradientDescentMulti(X, y, theta, alpha, num_iters)</div><div class="line">%GRADIENTDESCENTMULTI Performs gradient descent to learn theta</div><div class="line">%   theta = GRADIENTDESCENTMULTI(x, y, theta, alpha, num_iters) updates theta by</div><div class="line">%   taking num_iters gradient steps with learning rate alpha</div><div class="line"></div><div class="line">% Initialize some useful values</div><div class="line">m = length(y); % number of training examples</div><div class="line">J_history = zeros(num_iters, 1);</div><div class="line">for iter = 1:num_iters</div><div class="line"></div><div class="line">    % ====================== YOUR CODE HERE ======================</div><div class="line">    % Instructions: Perform a single gradient step on the parameter vector</div><div class="line">    %               theta. </div><div class="line">    %</div><div class="line">    % Hint: While debugging, it can be useful to print out the values</div><div class="line">    %       of the cost function (computeCostMulti) and gradient here.</div><div class="line">    %</div><div class="line">    h = theta&apos; .* X ;</div><div class="line">    s = size(h,2);</div><div class="line"></div><div class="line">    j = h(:,1);</div><div class="line">    for i = 2:s</div><div class="line">      j = j + h(:,i);</div><div class="line">    end</div><div class="line">    j = j - y;</div><div class="line">    </div><div class="line">    s = size(theta,1);</div><div class="line">    for i = 1:s</div><div class="line">      theta(i) = theta(i) - sum(j&apos; * X(:,i)) * alpha / m;</div><div class="line">    end</div><div class="line">    % ============================================================</div><div class="line"></div><div class="line">    % Save the cost J in every iteration    </div><div class="line">    J_history(iter) = computeCostMulti(X, y, theta);</div><div class="line">end</div></pre></td></tr></table></figure>
+<h4 id="特征正则化"><a href="#特征正则化" class="headerlink" title="特征正则化"></a>特征正则化</h4><p>采用均值和标准差对特征数据做正则化</p>
+<ul>
+<li>求得每个维度的均值、标准差</li>
+<li>每个维度减去该维度的均值，然后除以标准差</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">function [X_norm, mu, sigma] = featureNormalize(X)</div><div class="line">%FEATURENORMALIZE Normalizes the features in X </div><div class="line">%   FEATURENORMALIZE(X) returns a normalized version of X where</div><div class="line">%   the mean value of each feature is 0 and the standard deviation</div><div class="line">%   is 1. This is often a good preprocessing step to do when</div><div class="line">%   working with learning algorithms.</div><div class="line"></div><div class="line">% You need to set these values correctly</div><div class="line">X_norm = X;</div><div class="line">mu = zeros(1, size(X, 2));</div><div class="line">sigma = zeros(1, size(X, 2));</div><div class="line"></div><div class="line">% ====================== YOUR CODE HERE ======================</div><div class="line">% Instructions: First, for each feature dimension, compute the mean</div><div class="line">%               of the feature and subtract it from the dataset,</div><div class="line">%               storing the mean value in mu. Next, compute the </div><div class="line">%               standard deviation of each feature and divide</div><div class="line">%               each feature by it&apos;s standard deviation, storing</div><div class="line">%               the standard deviation in sigma. </div><div class="line">%</div><div class="line">%               Note that X is a matrix where each column is a </div><div class="line">%               feature and each row is an example. You need </div><div class="line">%               to perform the normalization separately for </div><div class="line">%               each feature. </div><div class="line">%</div><div class="line">% Hint: You might find the &apos;mean&apos; and &apos;std&apos; functions useful.</div><div class="line">%       </div><div class="line">mu = mean(X);</div><div class="line">sigma = std(X);</div><div class="line"></div><div class="line">s = size(X,2);</div><div class="line">for iter = 1:s</div><div class="line">  X_norm(:,iter) = (X_norm(:,iter) - mu(iter)) ./ sigma(iter);</div><div class="line">end</div><div class="line">% ============================================================</div><div class="line">end</div></pre></td></tr></table></figure>
+<h4 id="Normal-Equation-正规方程"><a href="#Normal-Equation-正规方程" class="headerlink" title="Normal Equation(正规方程)"></a>Normal Equation(正规方程)</h4><p>根据假设函数，我们可以通过方程转换的到Normal Equation表达式直接计算得到<em>theta</em><br>$$<br>\theta = (X^TX)^{-1}X^ T\vec y<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">function [theta] = normalEqn(X, y)</div><div class="line">%NORMALEQN Computes the closed-form solution to linear regression </div><div class="line">%   NORMALEQN(X,y) computes the closed-form solution to linear </div><div class="line">%   regression using the normal equations.</div><div class="line"></div><div class="line">theta = zeros(size(X, 2), 1);</div><div class="line"></div><div class="line">% ====================== YOUR CODE HERE ======================</div><div class="line">% Instructions: Complete the code to compute the closed form solution</div><div class="line">%               to linear regression and put the result in theta.</div><div class="line">%</div><div class="line"></div><div class="line">% ---------------------- Sample Solution ----------------------</div><div class="line">theta = (X&apos; * X)^(-1) * X&apos; * y;</div><div class="line">% -------------------------------------------------------------</div><div class="line">% ============================================================</div><div class="line">end</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;假设函数&quot;&gt;&lt;a href=&quot;#假设函数&quot; class=&quot;headerlink&quot; title=&quot;假设函数&quot;&gt;&lt;/a&gt;假设函数&lt;/h4&gt;&lt;p&gt;以下编程逻辑基于此处定义的假设函数&lt;br&gt;$$&lt;br&gt;h_\theta(x) = \theta^T\vec x&lt;br&gt;$$&lt;
+    
+    </summary>
+    
+    
+      <category term="机器学习" scheme="https://liamlee.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="线性回归" scheme="https://liamlee.github.io/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/"/>
+    
+      <category term="LinearRegression" scheme="https://liamlee.github.io/tags/LinearRegression/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>回首2016</title>
+    <link href="https://liamlee.github.io/2016/12/29/look-back-2016/"/>
+    <id>https://liamlee.github.io/2016/12/29/look-back-2016/</id>
+    <published>2016-12-29T15:30:13.000Z</published>
+    <updated>2017-01-01T03:16:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>2016又即将过去，就像每个今天变成昨天，今年的2016就要变成去年2016了。我已经忘记了2016年年初有没有定下一些目标，所以不敢说完成了什么。在这里现在只能做一点回忆，做一点总结，或许写到最后还会做一点规划，定下一些目标。</p>
+<h3 id="收获"><a href="#收获" class="headerlink" title="收获"></a>收获</h3><p>收货的话，今年确实收了不少，但是收获从何说起呢？</p>
+<p>读书一定可以算得上是一个，这一年虽然没有刻意的按照一个量化的目标去读书，但确实没有停止读书，读书习惯较之前可以说是更好了一些。2016年，实实在在读完的书有那么几本。</p>
+<p>《易中天中华史》系列，目前出版的有17本，从我们的祖先时代读到隋唐时代，最新的关于大宋的一本暂时还没读。十六本通读下来，首先佩服易老师致力写这么一套书，书中体现出易老师严谨的历史态度，就算有偏好的历史人物，在阐述“事实”的时候也是基于严谨的史料考据和客观的态度。</p>
+<p>中学上了四年的历史课，大学一年，都没有学到一点历史观，所有为了考试背诵的历史年份、历史人物、历史事件，都在考试后忘得一干二净。</p>
+<p>在阅读这一套丛书的时候，历史思维、历史观开始一点点建立起来了，对待历史人物、历史事件有了新的看法和思考，这种思考也顺便融入了对现在的思考中。对比历史各个时期，现在的人在很多方面都有了巨大的进步，比如科技，比如文明，但也有些方面感觉上似乎没有多大进步，比如人们依然不知道幸福为何物，面对“哲学三问”依然茫然。</p>
+<p>读了几本不错的小说《嫌疑人X的献身》、《钟鼓楼》，刘心武先生的《钟鼓楼》着实让我印象深刻。起先并没有看过刘老师的书，知道他是从百家讲坛，但仅仅是知道，因为他讲的“解密红楼梦”我也没看过。然而这本小说让我惊叹刘老师人物刻画的功力。将北京浓缩在一个四合院中，有血有肉、个性鲜明的小人物身上。故事没有开始更没有结尾，因为人们一代又一代故事怎么讲得完。</p>
+<p>另外，基本经济类的书籍，《斯坦福极简经济学》、《一本书通读10位经济学大师》。不敢说读完后就懂了经济学，但是多少有些一些经济学思维。</p>
+<h3 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h3><h3 id="迷茫"><a href="#迷茫" class="headerlink" title="迷茫"></a>迷茫</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;2016又即将过去，就像每个今天变成昨天，今年的2016就要变成去年2016了。我已经忘记了2016年年初有没有定下一些目标，所以不敢说完成了什么。在这里现在只能做一点回忆，做一点总结，或许写到最后还会做一点规划，定下一些目标。&lt;/p&gt;
+&lt;h3 id=&quot;收获&quot;&gt;&lt;a hre
+    
+    </summary>
+    
+    
+      <category term="总结" scheme="https://liamlee.github.io/tags/%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
   
   <entry>
     <title>Spark-Notebook安装与调教</title>
@@ -78,9 +149,9 @@
     </summary>
     
     
-      <category term="Spark" scheme="https://liamlee.github.io/tags/Spark/"/>
-    
       <category term="大数据" scheme="https://liamlee.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="Spark" scheme="https://liamlee.github.io/tags/Spark/"/>
     
       <category term="安装教程" scheme="https://liamlee.github.io/tags/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
     
