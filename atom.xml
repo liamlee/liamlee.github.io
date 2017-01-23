@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liamlee.github.io/"/>
-  <updated>2017-01-23T15:33:48.000Z</updated>
+  <updated>2017-01-23T15:40:52.000Z</updated>
   <id>https://liamlee.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://liamlee.github.io/2017/01/20/Chapter1_UsingNeuralNetsToRecognizeHandwrittenDigits/"/>
     <id>https://liamlee.github.io/2017/01/20/Chapter1_UsingNeuralNetsToRecognizeHandwrittenDigits/</id>
     <published>2017-01-20T09:38:27.000Z</published>
-    <updated>2017-01-23T15:33:48.000Z</updated>
+    <updated>2017-01-23T15:40:52.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>说明：本系列文章不是原创，</p>
@@ -30,7 +30,7 @@
 <p>翻译这些文章也是心血来潮的决定，只是想为什么不通过边学边译来加深学习效果呢？</p>
 <p>给自己一个挑战也是极好的。</p>
 </blockquote>
-<p>人类的视觉系统可谓是一个世界奇迹。观察下面的手写体数字序列：</p>
+<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>人类的视觉系统可谓是一个世界奇迹。观察下面的手写体数字序列：</p>
 <p><img src="http://neuralnetworksanddeeplearning.com/images/digits.png" alt=""></p>
 <p>大多数人可以毫不费力的识别出这串数字是“504192”。这种“毫不费力”是表面性的。人类大脑两个半球都有一个基本的视觉皮层，我们也称之为\(V_1\)，它们包含了14亿个神经元，这些神经元构成了上百亿的连接。但是人类的视觉不仅仅只涉及\(V_1\)，而是由整个视觉皮质完成——\(V_2，V_3，V_4，V_5\)——每个层级依次完成更复杂的图像处理。我们就像携带了一个超级计算机在我们的大脑，经过数百万年的进化，可以非常好的理解这个视觉性的世界。识别手写体数字其实并不容易。相反的，我们人类对我们眼中的世界表现出惊人的认知能力。但这些都是在无意识中做到的，所以我们很少意识到我们的视觉系统在这个过程中完成了多么复杂的工作。</p>
 <p>如果你试图编写一段程序让计算机来识别上面的数字，你就明显体会到其中的困难。看上去我们自己很容易做到的事情在计算机那里瞬间变得异常的困难。人类很简单的识别形状的直觉——一个9是上面一个圈，右下方一条竖直线——如果用算法来表示则非常困难。当你想精确的定义这种规则时，你会很快迷失在各种异常情况、特殊情况中，很难理出头绪来。</p>
@@ -246,9 +246,9 @@
     </summary>
     
     
-      <category term="大数据" scheme="https://liamlee.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
       <category term="Spark" scheme="https://liamlee.github.io/tags/Spark/"/>
+    
+      <category term="大数据" scheme="https://liamlee.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="安装教程" scheme="https://liamlee.github.io/tags/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
     
