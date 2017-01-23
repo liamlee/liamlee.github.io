@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liamlee.github.io/"/>
-  <updated>2017-01-23T15:27:01.000Z</updated>
+  <updated>2017-01-23T15:33:48.000Z</updated>
   <id>https://liamlee.github.io/</id>
   
   <author>
@@ -20,11 +20,15 @@
     <link href="https://liamlee.github.io/2017/01/20/Chapter1_UsingNeuralNetsToRecognizeHandwrittenDigits/"/>
     <id>https://liamlee.github.io/2017/01/20/Chapter1_UsingNeuralNetsToRecognizeHandwrittenDigits/</id>
     <published>2017-01-20T09:38:27.000Z</published>
-    <updated>2017-01-23T15:27:01.000Z</updated>
+    <updated>2017-01-23T15:33:48.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
-<p>说明：本系列文章不是原创，而是在学习<a href="http://neuralnetworksanddeeplearning.com/index.html" target="_blank" rel="external">Neural Networks and Deep Learning</a> 的时候顺便做的翻译。</p>
-<p>正值春节假期，没有工作上的事劳心劳神。拜年、聚会的觥筹交错之余，正好为自己充充电。翻译这些文章也是心血来潮的决定，只是想为什么不通过边学边译来加深学习效果呢？给自己一个挑战也是极好的。</p>
+<p>说明：本系列文章不是原创，</p>
+<p>而是在学习<a href="http://neuralnetworksanddeeplearning.com/index.html" target="_blank" rel="external">Neural Networks and Deep Learning</a> 的时候顺便做的翻译。</p>
+<p>正值春节假期，没有工作上的事劳心劳神。</p>
+<p>拜年、聚会的觥筹交错之余，正好为自己充充电。</p>
+<p>翻译这些文章也是心血来潮的决定，只是想为什么不通过边学边译来加深学习效果呢？</p>
+<p>给自己一个挑战也是极好的。</p>
 </blockquote>
 <p>人类的视觉系统可谓是一个世界奇迹。观察下面的手写体数字序列：</p>
 <p><img src="http://neuralnetworksanddeeplearning.com/images/digits.png" alt=""></p>
@@ -92,7 +96,8 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;说明：本系列文章不是原创，而是在学习&lt;a href=&quot;http://neuralnetworksanddeeplearning.com/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Neural Networ
+&lt;p&gt;说明：本系列文章不是原创，&lt;/p&gt;
+&lt;p&gt;而是在学习&lt;a href=&quot;http://neuralnetworksanddeeplearning.com/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Neura
     
     </summary>
     
