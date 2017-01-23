@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liamlee.github.io/"/>
-  <updated>2017-01-23T10:33:12.000Z</updated>
+  <updated>2017-01-23T15:05:10.000Z</updated>
   <id>https://liamlee.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://liamlee.github.io/2017/01/20/Chapter1_UsingNeuralNetsToRecognizeHandwrittenDigits/"/>
     <id>https://liamlee.github.io/2017/01/20/Chapter1_UsingNeuralNetsToRecognizeHandwrittenDigits/</id>
     <published>2017-01-20T09:38:27.000Z</published>
-    <updated>2017-01-23T10:33:12.000Z</updated>
+    <updated>2017-01-23T15:05:10.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>说明：本系列文章不是原创，而是在学习<a href="http://neuralnetworksanddeeplearning.com/index.html" target="_blank" rel="external">Neural Networks and Deep Learning</a> 的时候顺便做的翻译。</p>
@@ -81,9 +81,9 @@
 <p>跟感知器一样，sigmoid神经元有输入，\(x_1,x_2,\ldots\)，但是它的输出是0到1之间的任意实数，包含0和1，而不仅仅是0和1。比如，0.638…对sigmoid神经元来说是一个合法的输出。同样的，sigmoid神经元的每个输入也有权重，\(w_1,w_2,\ldots\)，以及全局偏差b。但是它的输出是\(\sigma(w \cdot x+b)\)，\(\sigma\)即是sigmoid函数，定义如下：<br>$$<br>\begin{eqnarray}<br>  \sigma(z) \equiv \frac{1}{1+e^{-z}}.<br>\tag{3}\end{eqnarray}<br>$$<br>我们把输入、权重以及偏差带入公式得到更精确的表达式：<br>$$<br>\begin{eqnarray}<br>  \frac{1}{1+\exp(-\sum_j w_j x_j-b)}.<br>\tag{4}\end{eqnarray}<br>$$<br>咋一看，sigmoid神经元与感知器差别很大。如果你不熟悉，sigmoid函数的代数表达式则显得晦涩难懂让人生畏。实际上，感知器与sigmoid神经元存在很多相似的地方，同时sigmoid函数的代数表达式更多的是显示了技术细节，而不是增加了理解上的障碍。</p>
 <p>为了类感知器模型，假设\(z\equiv w \cdot x + b\)是一个非常大的正数，那么\(e^{-z}\approx 0\)，即\(\sigma(z) \approx 1\)。也就是说，当\(z = w\cdot x+b\)趋近于正无穷时，sigmoid神经元输出趋近于1，就像感知器。同理，当\(z = w \cdot x+b\)趋向于负无穷时，有\(e^{-z} \rightarrow \infty, \sigma(z) \approx 0\)。所以当\(z = w \cdot x +b\)趋向于负无穷时，sigmoid神经元也相当于一个感知器。仅当\(w \cdot x+b\)的值大小适中时，sigmoid神经元与感知器模型相差甚远。</p>
 <p>\(\sigma\)的代数形式究竟是什么？我如何来理解它？其实，\(\sigma\)的精确形式并没有那么重要，真正重要的是函数画出来的图形，如下图：</p>
-<p><img src="/Users/liam/MyWork/myBlog/public/fancybox/ML/sigmoidfunction-1.png" alt=""></p>
+<p><img src="../img/ML/sigmoidfunction-1.png" alt=""></p>
 <p>这是跃阶函数的平滑版图形：</p>
-<p><img src="/Users/liam/MyWork/myBlog/public/fancybox/ML/stepfunction-1.png" alt=""></p>
+<p><img src="../img/ML/stepfunction-1.png" alt=""></p>
 <p>如果\(\sigma\)变成跃阶函数，神经元的输出是0是1取决于\(w\cdot x+b\)是正还是负，那么sigmoid神经元则退化成了一个感知器。通过使用真实的\(\sigma\)函数我们就得到了一个平滑输出的感知器。实际上，真正关键的是\(\sigma\)函数的平滑度，而并非其形式的细节。平滑意味着权重和偏差的细微变化(\(\Delta w_j,\Delta b\))将引起输出的细微变化\(\Delta \mbox{output}\)。事实上，微积分告诉我们\(\Delta \mbox{output}\)约等于：<br>$$<br>\begin{eqnarray}<br>  \Delta \mbox{output} \approx \sum_j \frac{\partial \, \mbox{output}}{\partial w_j}<br>  \Delta w_j + \frac{\partial \, \mbox{output}}{\partial b} \Delta b,<br>\tag{5}\end{eqnarray}<br>$$<br>其中求和表示包括了所有的权重，\(\partial \,\mbox{output} / \partial w_j ,\partial \,\mbox{output} / \partial b\)分别为输出对于权重和偏差的偏导数。如果你不熟悉偏导数问题也不大。上面的表达式看上去很复杂，其实它揭示着很简单的东西(好消息)：\(\Delta \mbox{output}\)是关于权重和偏差变化(\(\Delta w_j,\Delta b\))的线性函数。这种线性特性让通过选择权重和偏差的细微变化得到期望的输出细微变化变得简单了。所以，sigmoid神经元在保留很多感知器属性的同时，也使得找出如何通过改变权重和方差来改变输出变得容易了很多。</p>
 <p>如果真如上面说的，重要的是\(\sigma\)的形状而不是其精确形式，那我们为什么挑选的是公式(3)那样的表达式呢？实际上，本书后续内容中，我们会偶尔考虑其他形式激活函数\(f(\cdot)\)的神经元。当我们选取不同的激活函数时，主要是引起了偏导数(5)值的变化。后面会看到我们的偏导数计算由于选取了\(\sigma\)在代数上得到了很大的简化，原因在于指数函数在求导时有着很友好的特性。任何场景下，\(\sigma\)都是普遍应用于神经元中，这也是本书用到最多的激活函数。</p>
 <p>我们如何解释sigmoid神经元的输出呢？显然，sigmoid神经元与感知器一个最大的区别在于sigmoid神经元的输出不仅仅是0和1，它可以输出0和1之间的任意实数，如0.173……和0.689……都是合法的输出。这是很有用的一个特性，比如，我们想用输出值来表示一个神经网络输入图像像素的平均强度。但也有麻烦的时候，假设，我们要求网络输出显示“输入图片是9”或者“输入图片不是9”。显然，像感知器那样直接输出1或0更容易。实际情况下，我们可以做一些约定来解决这个问题，如，当输出大于等于0.5时判定为“9“，小于0.5时判定不是”9“。为了不引起混淆，每次用到这种约定时我都会做明确的申明。</p>
