@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liamlee.github.io/"/>
-  <updated>2017-01-16T12:49:38.000Z</updated>
+  <updated>2017-01-23T09:42:30.000Z</updated>
   <id>https://liamlee.github.io/</id>
   
   <author>
@@ -16,15 +16,104 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>第一章 使用神经网络识别手写体数字</title>
+    <link href="https://liamlee.github.io/2017/01/16/Chapter1_UsingNeuralNetsToRecognizeHandwrittenDigits/"/>
+    <id>https://liamlee.github.io/2017/01/16/Chapter1_UsingNeuralNetsToRecognizeHandwrittenDigits/</id>
+    <published>2017-01-16T10:38:27.000Z</published>
+    <updated>2017-01-23T09:42:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>说明：本系列文章不是原创，而是在学习<a href="http://neuralnetworksanddeeplearning.com/index.html" target="_blank" rel="external">Neural Networks and Deep Learning</a> 的时候顺便做的翻译。</p>
+<p>正值春节假期，没有工作上的事劳心劳神。拜年、聚会的觥筹交错之余，正好为自己充充电。翻译这些文章也是心血来潮的决定，只是想为什么不通过边学边译来加深学习效果呢？给自己一个挑战也是极好的。</p>
+</blockquote>
+<p>人类的视觉系统可谓是一个世界奇迹。观察下面的手写体数字序列：</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/digits.png" alt="digits"></p>
+<p>大多数人可以毫不费力的识别出这串数字是“504192”。这种“毫不费力”是表面性的。人类大脑两个半球都有一个基本的视觉皮层，我们也称之为“V1”，它们包含了14亿个神经元，这些神经元构成了上百亿的连接。但是人类的视觉不仅仅只涉及“V1”，而是由整个视觉皮质完成——“V2，V3，V4，V5”——每个层级依次完成更复杂的图像处理。我们就像携带了一个超级计算机在我们的大脑，经过数百万年的进化，可以非常好的理解这个视觉性的世界。识别手写体数字其实并不容易。相反的，我们人类对我们眼中的世界表现出惊人的认知能力。但这些都是在无意识中做到的，所以我们很少意识到我们的视觉系统在这个过程中完成了多么复杂的工作。</p>
+<p>如果你试图编写一段程序让计算机来识别上面的数字，你就明显体会到其中的困难。看上去我们自己很容易做到的事情在计算机那里瞬间变得异常的困难。人类很简单的识别形状的直觉——一个9是上面一个圈，右下方一条竖直线——如果用算法来表示则非常困难。当你想精确的定义这种规则时，你会很快迷失在各种异常情况、特殊情况中，很难理出头绪来。</p>
+<p>神经网络通过另一种途径来解决这个问题。它的核心思想是，收集大量的手写体样本，通常称之为训练样本，</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/mnist_100_digits.png" alt="minst_100_digits"></p>
+<p>然后开发一个能从这些样本进行学习的系统。换句话说，神经网络利用训练样本自动的推断识别手写体数字的规则。此外，神经网络的识别准确率可以随着样本的增多而提高。我在上面的样例图中只展示了100个训练数字样本，或许我们可以使用数以千计或者数百万甚至上亿的训练样本来建立更好的书写体识别系统。</p>
+<p>本章我们将编程实现一个能够通过学习去识别手写体数字的神经网络。这个程序将只有74行代码，不适用任何专门的神经网络库。在没有人工干预的情况下，这个简单的程序的准确率将不低于96%。此外，我们会在接下来的章节中探索如何将准确率提升到99%以上。事实上，最好的商业神经网络已经有非常好的表现，银行用它们来做流程检查、邮局利用它们来做地址识别。</p>
+<p>我们聚焦于手写体识别，是因为这是一个很典型的问题，对我们学习神经网络来说算得上一个绝佳的原型。原因有两点：首先，具有挑战性。手写体数字的识别不是小菜一碟的问题，同时也没有那么的难，它不要求非常复杂的方法或者大规模的计算能力。其次，我们可以通过它来探索更先进的技术，比如深度学习。所以整本书中，我们会反复的聚焦到手写体识别问题上。在本书后续章节中，我们将讨论如何将这种思想应用到其他领域，比如计算机视觉、自然语言处理等等。</p>
+<p>当然，如果本章只是要编写一个能够识别手写体数字的程序，那么本章节将会很简短。但是，我们会在这个过程中探索很多关于神经网络的关键思想，包括两种重要的人工神经元(感知器和sigmoid神经元)，以及标准的神经网络算法，即随机梯度下降。从始至终，我聚焦于揭示事物(神经网络)的本质，帮助你建立你的神经网络思维。这就需要一个漫长的讨论过程，而不是仅仅简单的罗列基本原理和概念。为了让书本前的你有更深的认识，非常值得多费一些笔墨。当达到本书的最后时，我们将知道什么是深度学习，以及深度学习为什么如此的重要。</p>
+<h2 id="感知器"><a href="#感知器" class="headerlink" title="感知器"></a>感知器</h2><p>什么是神经网络？首先，让我来阐释一种人工神经元：感知器。感知器最早由科学家<a href="http://en.wikipedia.org/wiki/Frank_Rosenblatt" target="_blank" rel="external">Frank Rosenblatt</a> 受到<a href="http://en.wikipedia.org/wiki/Warren_McCulloch" target="_blank" rel="external">Warren McCulloch</a> 和 <a href="http://en.wikipedia.org/wiki/Walter_Pitts" target="_blank" rel="external">Walter Pitts</a> 的早期<a href="http://scholar.google.ca/scholar?cluster=4035975255085082870" target="_blank" rel="external">工作</a> 的启发，在1950~1960间开发出来。在今天，另一种人工神经元“sigmoid”神经元更广泛应用于现代的神经网络中，也是本书重点要介绍的。虽然我们不用感知器这种神经元，但是为了更好的理解“sigmoid”神经元为什么如此设计，我们还是先花点时间了解一下感知器。</p>
+<p>那么，感知器是如何工作的呢？一个感知器接收几个二进制输入，$x_1, x_2, \ldots$，然后输出一个的二进制结果：</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz0.png" alt="tizk0"></p>
+<p>在上面的图例中，感知器有三个输入, $x_1,x_2,x_3$。通常它可以有更少或者更多的输入。Rosenblatt提出一个简单的计算输出的规则。他引入了权重，$w_1,w_2,\ldots$，用实数来表示各个输入对输出的重要程度。神经元的输出，0或者1，由输入的加权和值$\sum_j w_j x_j$是否大于某个阀值来决定。跟权重一样，阀值同样也是神经元的一个实数参数。用精确的数学表达式表示：<br>$$<br>\begin{eqnarray}<br>  \mbox{output} &amp; = &amp; \left{ \begin{array}{ll}<br>      0 &amp; \mbox{if } \sum_j w_j x_j \leq \mbox{ threshold} \<br>      1 &amp; \mbox{if } \sum_j w_j x_j &gt; \mbox{ threshold}<br>      \end{array} \right.<br>\tag{1}\end{eqnarray}<br>$$<br>这就是感知器的工作方式！</p>
+<p>以上是基本的数学模型。你可以这么来看待一个感知器：通过对证据进行加权然后做出决策的一种设备。让我来举个不是很实际但是很容易理解的例子，紧接着我们会看到一些更实际的例子。假设周末临近，你得到消息你所在的城市将要举行一场奶酪节。你非常喜欢奶酪，正愁要不要去参加。你可能要权衡一下以下因素然后决定去还是不去：</p>
+<ol>
+<li>当天天气是不是够好？</li>
+<li>你的男(女)朋友会跟你一起去吗？</li>
+<li>现场离公交站远不远(你没有车)？</li>
+</ol>
+<p>我们用相应的二进制变量$x_1,x_2,x_3$表示这三个因素。例如，$x_1 = 1$表示好天气，$x_1 = 0$表示坏天气；类似的，$x_2 = 1$表示你的男/女朋友愿意去，$x_2 = 0$表示不愿意，同样的$x_3$来表示交通。</p>
+<p>现在，假设你是奶酪的忠实粉丝，不管你的男(女)朋友是否有兴趣并且到那的交通非常不方便，你都很乐意前往。但是你是真的很难忍受坏天气，如果天气不好你说什么也不愿意去了。这时候你可以用感知器来建模做判断。一种可行的方式，选择$w_1 = 6$代表天气权重，$w_2 = 2,w_3 = 2$代表其他两项的权重。$w_1$的值越大说明你越重视天气因素，远远重于交通和男(女)朋友的态度。最后，假设你设定阀值5。根据这些选择，感知器变成了一个这样的需求决策模型，当天气好时模型输出1，天气不好的时候输出0，交通状况以及男(女)朋友的态度变得无关紧要。</p>
+<p>通过改变权重和阀值，我们可以得到不同的决策模型。例如，假设将阀值设定为3，感知器会在天气好或者交通便利并且你男(女)朋友愿意陪你去的情况下告知你应该前往。换句话说，这是一个完全不一样的决策器。下调阀值意味着你前往的意愿在变大。</p>
+<p>显然，感知器不是一个完全人性化的决策模型。但是它演示了感知器是如何通过加权证据并做出决策。我们似乎可以想象，一个复杂的由感知器组成的网络可以做一些相当微妙的决策：</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz1.png" alt="tikz1"></p>
+<p>在这个网络中，第一栏的感知器——通常称之为第一层感知器——完成三个很简单的决策，对输入信息进行加权。那么第二层的感知器呢？这一层的每个感知器对第一层的结果进行再次加权。如此，相对于第一层的感知器，第二层可以完成更复杂和更抽象的决策，然后再进一步复杂的决策由第三层感知器完成。这样一来，一个多层的感知器网络可以胜任复杂的决策。</p>
+<p>顺带的，我在定义感知器的时候有说过，感知器只有一个输出。上面图片显示的网络中看上去是多个输出。实际上，它们仍然是一个输出，多个输出箭头表示的是一个输出被后续多个感知器当做输入。相比起来，画一个单个输出然后在拆分显得不简洁。</p>
+<p>让我们来简化一下感知器的描述，条件表达式$\sum_jw_j x_j &gt; \mbox{threshold}$ 显得繁琐，我们替换两个符号来达到简化的效果。首先，用点积替代$\sum_jw_j x_j $，$w \cdot x \equiv \sum_j w_j x_j$，$w$,$x$分别表示权重和输入的向量。其次，将阀值移到不等式的左边来，用偏差概念替换原来的阀值概念：$b \equiv -\mbox{threshold}$。最后，感知器的规则表达式更新为：<br>$$<br>\begin{eqnarray}<br>  \mbox{output} = \left{<br>    \begin{array}{ll}<br>      0 &amp; \mbox{if } w\cdot x + b \leq 0 \<br>      1 &amp; \mbox{if } w\cdot x + b &gt; 0<br>    \end{array}<br>  \right.<br>\tag{2}\end{eqnarray}<br>$$<br>你可以把偏差理解成，感知器输出1的容易程度，或者使用更偏生物的术语，偏差是衡量感知器激活的容易度。当感知器拥有很大的偏差时，可以很轻易的得到1的输出；而当感知器的偏差趋向负无穷时，就很难得到1的输出了。显然，偏差的引入对感知器的描述来说只是一个小小的变化，但是后续我们可以感受到其带来大大的简化效果。所以，本书以后的内容中我们将不再使用阀值而使用偏差。</p>
+<p>我已经描述了感知器如何通过了对证据加权来做决策。另外，感知器可以用于计算初级逻辑函数，比如我们通常认为的底层计算，“与”、“或”，“与非”。举个例子，假设我们有一个两输入感知器，权重皆为-2以及全局偏差3。如图：</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz2.png" alt="tikz2"></p>
+<p>于是，我们可以看到，输入00得到输出1(因为(−2)∗0+(−2)∗0+3=3(−2)∗0+(−2)∗0+3=3 为正，这里的*表示乘法运算)。同样的，输入01和10得到1，但是输入11则得到0((−2)∗1+(−2)∗1+3=−1(−2)∗1+(−2)∗1+3=−1 为负)。那么，我们的感知器变就成了一个“与非门”。</p>
+<p>“与非”的例子显示我们可以利用感知器来计算简单的逻辑函数。实际上，我们可以使用感知器网络来计算任意的逻辑函数。原因在于“与非门”对计算是通用的，所以基于“与非门”可以实现任意的计算。例如，我们可以用与非门实现$x_1,x_2$求和的电路。这需要计算按位和，$x_1 \oplus x_2$，以及进位(当x1，x2都为1时进位为1)，进位即是按位积x1x2：</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz3.png" alt="tikz3"></p>
+<p>用权重为-2的二输入、全局偏差为3 的感知器替换与非门，就得到一个等价的感知器网络。下图就是该网络。注意到，为了方便的画出连线箭头，我把右下角的感知器稍稍移动了一下：</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz4.png" alt="tizk4"></p>
+<p>值得注意的一个地方是，最左边感知器的输出被最下面的感知器当做输入使用了两次。我在定义感知器的时候，并没有限定“双重输出到一个地方”是否可行。事实上，这问题不大，如果你要严格的限制这种情况，我们用一条权重为-4的连接线替换原来的两条权重为-2的连接线即可(如果对你来说不够明显，你可以稍微花点时间推算一下)。变换后的网络图如下(其他默认权重为-2，特别的将-4做了标记)：</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz5.png" alt="tikz5"></p>
+<p>到目前为止，我一直把输入变量(x1，x2)游离的画在最左边。通常情况会额外的加一层感知器(输入层)来对输入进行编码：</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz6.png" alt="tikz6"></p>
+<p>输入层的感知器符号(如下)，只有输出而没有输入：</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz7.png" alt="tikz7"></p>
+<p>这是一种简化，并不代表感知器真的没有输入。为了便于理解，假设确实这些感知器没有输入，那么加权求和$\sum_j w_j x_j$将一直是0，于是感知器只能输出固定的值：$b&gt;0$ 输入1；$b&lt;0$ 输入0，而不是我们所期望的值。最好的方式就是将输入感知器看做单纯用于输出期望的值(x1,x2,……)的特殊单元。</p>
+<p>加法器的例子展示了感知器网络如何模拟实现包含多个与非门的电路。因为与非门是通用的计算单位，所以感知器也遵循这个原则。</p>
+<p>感知器的通用性让人感到兴奋的同时也让人失望。可喜的是，因为其通用性，感知器网络可以比得上其他任何计算机设备；而失望的是，感知器不就是另一种与非门吗？有什么可兴奋的呢。</p>
+<p>然而，真实情况还不至于这么让人沮丧。事实证明，我们可以设计自动适配权重和偏差的学习算法用于网络中的神经元。这种适配源于对外部刺激的反馈，而不是由程序员的直接介入。这种学习算法给我们提供了一种完全不同于常规逻辑门的方法来使用人工神经元。不同于精确地将与非门的原件布局在电路上，神经网络是通过“学习”来解决的问题，因为有些时候要直接的设计常规的电路来应对某些难题会非常的困难。</p>
+<h2 id="Sigmoid神经元"><a href="#Sigmoid神经元" class="headerlink" title="Sigmoid神经元"></a>Sigmoid神经元</h2><p>学习算法听起来妙极了。问题是我们如何才能设计出适用于神经网络的学习算法呢？假设我们有一个感知器网络，并且想用它来解决一些实际问题。例如，用手写体数字的原始像素扫面数据作为输入，我们期望这个网络能通过学习获得“权重”和“偏差”以便能正确的识别出扫面数据中的数字。为了演示这种学习是如何进行的，先假设我们对权重(偏差)做一点微小的改动，我们期望的是网络的输出也随之发生一点细微的变动，这种特性使得网络在某一时刻达到学习的目标。如下示意图展示了我们的期望(当然这个网络过于简单，不足以完成手写体的识别)：</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz8.png" alt="tikz8"></p>
+<p>如果权重(偏差)微小的变化只引起输出细微的变化，那我们可以依此来调整权重(偏差)的得到我们期望行为的网络。例如，假设我们的网络错误的将“9”识别成了“8”，我们可以找出如何在权重(偏差)上做微调让网络分类结果更接近“9”，然后不断的重复这种微调让输出结果越来越好，最终我们的网络学会了学习。</p>
+<p>问题是，当我们的网络包含感知器的时候就不是这样的了。实际情况是，网络中任意一个感知器的权重或偏差发生一点细微的变化可能导致该感知器的输出翻转即0变1。这种翻转可能引起整个网络发生复杂的变化。所以，当你通过调整能正确的识别“9”了，但是其他的图片识别效果可能变得不可控了。这样一来，想要通过逐步的细微调整来让网络慢慢接近预期行为就变得不太现实了。也许确实存在某种巧妙的方法可以解决这种问题，但现在当务之急是我们怎么才能让感知器网络能学习。</p>
+<p>我们引入另一种人工神经元来克服这个难题，也就是sigmod神经元。sigmoid神经元与感知器相似，但它在权重或偏差发生细微变化时只会引起输出的细微变化，这就是sigmoid网络能学习的关键因素。</p>
+<p>现在，让我来正式描述一下sigmoid神经元。我们使用与感知器相似的图例表描绘sigmoid神经元：</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz9.png" alt="tikz9"></p>
+<p>跟感知器一样，sigmoid神经元有输入，x1,x2,……，但是它的输出是0到1之间的任意实数，包含0和1，而不仅仅是0和1。比如，0.638…对sigmoid神经元来说是一个合法的输出。同样的，sigmoid神经元的每个输入也有权重，w1,w2,……，以及全局偏差b。但是它的输出是$\sigma(w \cdot x+b)$，$\sigma$即是sigmoid函数，定义如下：<br>$$<br>\begin{eqnarray}<br>  \sigma(z) \equiv \frac{1}{1+e^{-z}}.<br>\tag{3}\end{eqnarray}<br>$$<br>我们把输入、权重以及偏差带入公式得到更精确的表达式：<br>$$<br>\begin{eqnarray}<br>  \frac{1}{1+\exp(-\sum_j w_j x_j-b)}.<br>\tag{4}\end{eqnarray}<br>$$<br>咋一看，sigmoid神经元与感知器差别很大。如果你不熟悉，sigmoid函数的代数表达式则显得晦涩难懂让人生畏。实际上，感知器与sigmoid神经元存在很多相似的地方，同时sigmoid函数的代数表达式更多的是显示了技术细节，而不是增加了理解上的障碍。</p>
+<p>为了类感知器模型，假设$z\equiv w \cdot x + b$是一个非常大的正数，那么$e^{-z}\approx 0$，即$\sigma(z) \approx 1$。也就是说，当$z = w\cdot x+b$趋近于正无穷时，sigmoid神经元输出趋近于1，就像感知器。同理，当$z = w \cdot x+b$趋向于负无穷时，有$e^{-z} \rightarrow \infty, \sigma(z) \approx 0$。所以当$z = w \cdot x +b$趋向于负无穷时，sigmoid神经元也相当于一个感知器。仅当$w \cdot x+b$的值大小适中时，sigmoid神经元与感知器模型相差甚远。</p>
+<p>$\sigma$的代数形式究竟是什么？我如何来理解它？其实，$\sigma$的精确形式并没有那么重要，真正重要的是函数画出来的图形，如下图：<img src="/Users/liam/MyWork/my_web/images/ML/sigmoidfunction-1.png" alt="sigmoidfunction-1"></p>
+<p>这是跃阶函数的平滑版图形：</p>
+<p><img src="/Users/liam/MyWork/my_web/images/ML/stepfunction-1.png" alt="stepfunction-1"></p>
+<p>如果$\sigma$变成跃阶函数，神经元的输出是0是1取决于$w\cdot x+b$是正还是负，那么sigmoid神经元则退化成了一个感知器。通过使用真实的$\sigma$函数我们就得到了一个平滑输出的感知器。实际上，真正关键的是$\sigma$函数的平滑度，而并非其形式的细节。平滑意味着权重和偏差的细微变化($\Delta w_j,\Delta b$)将引起输出的细微变化$\Delta \mbox{output}$。事实上，微积分告诉我们$\Delta \mbox{output}$约等于：<br>$$<br>\begin{eqnarray}<br>  \Delta \mbox{output} \approx \sum_j \frac{\partial \, \mbox{output}}{\partial w_j}<br>  \Delta w_j + \frac{\partial \, \mbox{output}}{\partial b} \Delta b,<br>\tag{5}\end{eqnarray}<br>$$<br>其中求和表示包括了所有的权重，$\partial \,\mbox{output} / \partial w_j ,\partial \, \mbox{output} /\partialb$分别为输出对于权重和偏差的偏导数。如果你不熟悉偏导数问题也不大。上面的表达式看上去很复杂，其实它揭示着很简单的东西(好消息)：$\Delta \mbox{output}$是关于权重和偏差变化($\Delta w_j,\Delta b$)的线性函数。这种线性特性让通过选择权重和偏差的细微变化得到期望的输出细微变化变得简单了。所以，sigmoid神经元在保留很多感知器属性的同时，也使得找出如何通过改变权重和方差来改变输出变得容易了很多。</p>
+<p>如果真如上面说的，重要的是$\sigma$的形状而不是其精确形式，那我们为什么挑选的是公式(3)那样的表达式呢？实际上，本书后续内容中，我们会偶尔考虑其他形式激活函数$f(\cdot)$的神经元。当我们选取不同的激活函数时，主要是引起了偏导数(5)值的变化。后面会看到我们的偏导数计算由于选取了$\sigma$在代数上得到了很大的简化，原因在于指数函数在求导时有着很友好的特性。任何场景下，$\sigma$都是普遍应用于神经元中，这也是本书用到最多的激活函数。</p>
+<p>我们如何解释sigmoid神经元的输出呢？显然，sigmoid神经元与感知器一个最大的区别在于sigmoid神经元的输出不仅仅是0和1，它可以输出0和1之间的任意实数，如0.173……和0.689……都是合法的输出。这是很有用的一个特性，比如，我们想用输出值来表示一个神经网络输入图像像素的平均强度。但也有麻烦的时候，假设，我们要求网络输出显示“输入图片是9”或者“输入图片不是9”。显然，像感知器那样直接输出1或0更容易。实际情况下，我们可以做一些约定来解决这个问题，如，当输出大于等于0.5时判定为“9“，小于0.5时判定不是”9“。为了不引起混淆，每次用到这种约定时我都会做明确的申明。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;说明：本系列文章不是原创，而是在学习&lt;a href=&quot;http://neuralnetworksanddeeplearning.com/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Neural Networ
+    
+    </summary>
+    
+    
+      <category term="神经网络" scheme="https://liamlee.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+      <category term="手写体识别" scheme="https://liamlee.github.io/tags/%E6%89%8B%E5%86%99%E4%BD%93%E8%AF%86%E5%88%AB/"/>
+    
+      <category term="图像识别" scheme="https://liamlee.github.io/tags/%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB/"/>
+    
+  </entry>
+  
+  <entry>
     <title>斯坦福(吴恩达)-机器学习-第二周编程作业代码笔记</title>
     <link href="https://liamlee.github.io/2017/01/16/linearRegression/"/>
     <id>https://liamlee.github.io/2017/01/16/linearRegression/</id>
     <published>2017-01-16T10:38:27.000Z</published>
-    <updated>2017-01-16T12:49:38.000Z</updated>
+    <updated>2017-01-18T02:37:43.000Z</updated>
     
     <content type="html"><![CDATA[<h4 id="假设函数"><a href="#假设函数" class="headerlink" title="假设函数"></a>假设函数</h4><p>以下编程逻辑基于此处定义的假设函数<br>$$<br>h_\theta(x) = \theta^T\vec x<br>$$</p>
 <p>$$<br>h_\theta(x) = \theta_0 + \theta_1x<br>$$</p>
-<h4 id="computeCost"><a href="#computeCost" class="headerlink" title="computeCost"></a>computeCost</h4><p>回归问题中，通常选用Square error function</p>
+<h4 id="computeCost"><a href="#computeCost" class="headerlink" title="computeCost"></a>computeCost</h4><p>回归问题中，通常选用Square error function，也就是我们所说的“最小二乘法”</p>
 <p>$$<br>J(\theta) = \frac{1} {2m}\sum<em>{i=1}^m(h</em>\theta(x^{(i)}) - y^{(i)})^2<br>$$</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">function J = computeCost(X, y, theta)</div><div class="line">%COMPUTECOST Compute cost for linear regression</div><div class="line">%   J = COMPUTECOST(X, y, theta) computes the cost of using theta as the</div><div class="line">%   parameter for linear regression to fit the data points in X and y</div><div class="line"></div><div class="line">% Initialize some useful values</div><div class="line">m = length(y); % number of training examples</div><div class="line"></div><div class="line">% You need to return the following variables correctly </div><div class="line">J = 0;</div><div class="line"></div><div class="line">% ====================== YOUR CODE HERE ======================</div><div class="line">% Instructions: Compute the cost of a particular choice of theta</div><div class="line">%               You should set J to the cost.</div><div class="line">h = theta&apos; .* X ;</div><div class="line">J = sum((h(:,1) + h(:,2) - y) .^ 2) / m / 2 ;</div><div class="line"></div><div class="line">% =========================================================================</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
 <h4 id="computeCost-多维"><a href="#computeCost-多维" class="headerlink" title="computeCost-多维"></a>computeCost-多维</h4><p>多维情况下，为了更直观的指导编程，我们可以对函数表达式做一下改写<br>$$<br>J(\theta) = \frac{1}{2m}(X\theta - \vec y)^T(X\theta - \vec y)<br>$$</p>
