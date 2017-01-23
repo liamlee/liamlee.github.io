@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liamlee.github.io/"/>
-  <updated>2017-01-23T10:29:19.000Z</updated>
+  <updated>2017-01-23T10:33:12.000Z</updated>
   <id>https://liamlee.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://liamlee.github.io/2017/01/20/Chapter1_UsingNeuralNetsToRecognizeHandwrittenDigits/"/>
     <id>https://liamlee.github.io/2017/01/20/Chapter1_UsingNeuralNetsToRecognizeHandwrittenDigits/</id>
     <published>2017-01-20T09:38:27.000Z</published>
-    <updated>2017-01-23T10:29:19.000Z</updated>
+    <updated>2017-01-23T10:33:12.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>说明：本系列文章不是原创，而是在学习<a href="http://neuralnetworksanddeeplearning.com/index.html" target="_blank" rel="external">Neural Networks and Deep Learning</a> 的时候顺便做的翻译。</p>
@@ -84,7 +84,7 @@
 <p><img src="/Users/liam/MyWork/myBlog/public/fancybox/ML/sigmoidfunction-1.png" alt=""></p>
 <p>这是跃阶函数的平滑版图形：</p>
 <p><img src="/Users/liam/MyWork/myBlog/public/fancybox/ML/stepfunction-1.png" alt=""></p>
-<p>如果\(\sigma\)变成跃阶函数，神经元的输出是0是1取决于\(w\cdot x+b\)是正还是负，那么sigmoid神经元则退化成了一个感知器。通过使用真实的\(\sigma\)函数我们就得到了一个平滑输出的感知器。实际上，真正关键的是\(\sigma\)函数的平滑度，而并非其形式的细节。平滑意味着权重和偏差的细微变化(\(\Delta w_j,\Delta b\))将引起输出的细微变化\(\Delta \mbox{output}\)。事实上，微积分告诉我们\(\Delta \mbox{output}\)约等于：<br>$$<br>\begin{eqnarray}<br>  \Delta \mbox{output} \approx \sum_j \frac{\partial \, \mbox{output}}{\partial w_j}<br>  \Delta w_j + \frac{\partial \, \mbox{output}}{\partial b} \Delta b,<br>\tag{5}\end{eqnarray}<br>$$<br>其中求和表示包括了所有的权重，\(\partial \,\mbox{output} / \partial w_j ,\partial \,\mbox{output} / \partialb\)分别为输出对于权重和偏差的偏导数。如果你不熟悉偏导数问题也不大。上面的表达式看上去很复杂，其实它揭示着很简单的东西(好消息)：\(\Delta \mbox{output}\)是关于权重和偏差变化(\(\Delta w_j,\Delta b\))的线性函数。这种线性特性让通过选择权重和偏差的细微变化得到期望的输出细微变化变得简单了。所以，sigmoid神经元在保留很多感知器属性的同时，也使得找出如何通过改变权重和方差来改变输出变得容易了很多。</p>
+<p>如果\(\sigma\)变成跃阶函数，神经元的输出是0是1取决于\(w\cdot x+b\)是正还是负，那么sigmoid神经元则退化成了一个感知器。通过使用真实的\(\sigma\)函数我们就得到了一个平滑输出的感知器。实际上，真正关键的是\(\sigma\)函数的平滑度，而并非其形式的细节。平滑意味着权重和偏差的细微变化(\(\Delta w_j,\Delta b\))将引起输出的细微变化\(\Delta \mbox{output}\)。事实上，微积分告诉我们\(\Delta \mbox{output}\)约等于：<br>$$<br>\begin{eqnarray}<br>  \Delta \mbox{output} \approx \sum_j \frac{\partial \, \mbox{output}}{\partial w_j}<br>  \Delta w_j + \frac{\partial \, \mbox{output}}{\partial b} \Delta b,<br>\tag{5}\end{eqnarray}<br>$$<br>其中求和表示包括了所有的权重，\(\partial \,\mbox{output} / \partial w_j ,\partial \,\mbox{output} / \partial b\)分别为输出对于权重和偏差的偏导数。如果你不熟悉偏导数问题也不大。上面的表达式看上去很复杂，其实它揭示着很简单的东西(好消息)：\(\Delta \mbox{output}\)是关于权重和偏差变化(\(\Delta w_j,\Delta b\))的线性函数。这种线性特性让通过选择权重和偏差的细微变化得到期望的输出细微变化变得简单了。所以，sigmoid神经元在保留很多感知器属性的同时，也使得找出如何通过改变权重和方差来改变输出变得容易了很多。</p>
 <p>如果真如上面说的，重要的是\(\sigma\)的形状而不是其精确形式，那我们为什么挑选的是公式(3)那样的表达式呢？实际上，本书后续内容中，我们会偶尔考虑其他形式激活函数\(f(\cdot)\)的神经元。当我们选取不同的激活函数时，主要是引起了偏导数(5)值的变化。后面会看到我们的偏导数计算由于选取了\(\sigma\)在代数上得到了很大的简化，原因在于指数函数在求导时有着很友好的特性。任何场景下，\(\sigma\)都是普遍应用于神经元中，这也是本书用到最多的激活函数。</p>
 <p>我们如何解释sigmoid神经元的输出呢？显然，sigmoid神经元与感知器一个最大的区别在于sigmoid神经元的输出不仅仅是0和1，它可以输出0和1之间的任意实数，如0.173……和0.689……都是合法的输出。这是很有用的一个特性，比如，我们想用输出值来表示一个神经网络输入图像像素的平均强度。但也有麻烦的时候，假设，我们要求网络输出显示“输入图片是9”或者“输入图片不是9”。显然，像感知器那样直接输出1或0更容易。实际情况下，我们可以做一些约定来解决这个问题，如，当输出大于等于0.5时判定为“9“，小于0.5时判定不是”9“。为了不引起混淆，每次用到这种约定时我都会做明确的申明。</p>
 ]]></content>
