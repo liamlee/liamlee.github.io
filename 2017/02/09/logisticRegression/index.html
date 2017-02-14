@@ -96,7 +96,7 @@
 <meta property="og:description" content="假设函数先把假设函数放出来，一看假设函数，明白的人就已基本明白是个怎么回事了。$$h_\theta(x) = g(\theta^Tx)$$其中\(g\)：$$g(z) = \frac{1} { 1 + e^{-z} }$$\(g\)就是所谓的sigmoid函数。那么首先解决sigmoid函数的代码。
 简单模型Sigmoid函数代码很简单
 12345678910111213function g =">
-<meta property="og:updated_time" content="2017-02-14T10:12:14.000Z">
+<meta property="og:updated_time" content="2017-02-14T11:42:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="斯坦福(吴恩达)-机器学习-第三周编程作业代码笔记">
 <meta name="twitter:description" content="假设函数先把假设函数放出来，一看假设函数，明白的人就已基本明白是个怎么回事了。$$h_\theta(x) = g(\theta^Tx)$$其中\(g\)：$$g(z) = \frac{1} { 1 + e^{-z} }$$\(g\)就是所谓的sigmoid函数。那么首先解决sigmoid函数的代码。
@@ -190,7 +190,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -198,7 +198,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -267,7 +267,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Posted on</span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
             <time itemprop="dateCreated" datetime="2017-02-09T18:38:27+08:00" content="2017-02-09">
               2017-02-09
             </time>
@@ -307,8 +307,8 @@
 <h3 id="简单模型"><a href="#简单模型" class="headerlink" title="简单模型"></a>简单模型</h3><h4 id="Sigmoid函数"><a href="#Sigmoid函数" class="headerlink" title="Sigmoid函数"></a>Sigmoid函数</h4><p>代码很简单</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function g = sigmoid(z)</div><div class="line">%SIGMOID Compute sigmoid function</div><div class="line">%   g = SIGMOID(z) computes the sigmoid of z.</div><div class="line"></div><div class="line">% You need to return the following variables correctly </div><div class="line">g = zeros(size(z));</div><div class="line"></div><div class="line">% ====================== YOUR CODE HERE ======================</div><div class="line">% Instructions: Compute the sigmoid of each value of z (z can be a matrix,</div><div class="line">%               vector or scalar).</div><div class="line">g = 1 ./ (1 + exp(-z));</div><div class="line">% =============================================================</div><div class="line">end</div></pre></td></tr></table></figure>
 <h4 id="CostFunction"><a href="#CostFunction" class="headerlink" title="CostFunction"></a>CostFunction</h4><p>LogisticRegression问题同LinearRegression问题解决思路类似：构造costFunction，然后利用梯度下降算法求解min{costFunction}以此来求得合适的\(\theta\)。</p>
-<p>不同之处在于，LogisticRegression的costFunction不再使用“最小二乘法”，而是利用概率模型思想，利用样本来倒推出样本出现的最大概率，即极大似然估计思想。不过，进一步深究就会发现其实“极大似然”包含着“最小二乘法”，为什么暂且不表。于是有：<br>$$<br>J(\theta) = \frac{1}{m}\sum<em>{i = 1}^m[-y^{(i)}\log(h</em>\theta(x^{(i)})) - (1 - y^{(i)})\log(1 - h_\theta(x^{(i)}))]<br>$$</p>
-<p>而梯度函数：<br>$$<br>\frac{\partial J(\theta)}{\partial\theta<em>j} = \frac{1}{m}\sum</em>{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}<br>$$<br>代码表示</p>
+<p>不同之处在于，LogisticRegression的costFunction不再使用“最小二乘法”，而是利用概率模型思想，利用样本来倒推出样本出现的最大概率，即极大似然估计思想。不过，进一步深究就会发现其实“极大似然”包含着“最小二乘法”，为什么暂且不表。于是有：<br>$$<br>J(\theta) = \frac{1}{m}\sum_{i = 1}^m[-y^{(i)}\log(h_\theta(x^{(i)})) - (1 - y^{(i)})\log(1 - h_\theta(x^{(i)}))]<br>$$</p>
+<p>而梯度函数：<br>$$<br>\frac{\partial J(\theta)}{\partial\theta_j} = \frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}<br>$$<br>代码表示</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">function [J, grad] = costFunction(theta, X, y)</div><div class="line">%COSTFUNCTION Compute cost and gradient for logistic regression</div><div class="line">%   J = COSTFUNCTION(theta, X, y) computes the cost of using theta as the</div><div class="line">%   parameter for logistic regression and the gradient of the cost</div><div class="line">%   w.r.t. to the parameters.</div><div class="line"></div><div class="line">% Initialize some useful values</div><div class="line">m = length(y); % number of training examples</div><div class="line"></div><div class="line">% You need to return the following variables correctly </div><div class="line">J = 0;</div><div class="line">grad = zeros(size(theta));</div><div class="line"></div><div class="line">% ====================== YOUR CODE HERE ======================</div><div class="line">% Instructions: Compute the cost of a particular choice of theta.</div><div class="line">%               You should set J to the cost.</div><div class="line">%               Compute the partial derivatives and set grad to the partial</div><div class="line">%               derivatives of the cost w.r.t. each parameter in theta</div><div class="line">%</div><div class="line">% Note: grad should have the same dimensions as theta</div><div class="line">%</div><div class="line">h = sigmoid(X * theta);</div><div class="line">J = (-y&apos; * log(h) - (1 - y)&apos; * log(1 - h)) / m;</div><div class="line">grad = ((h - y)&apos; * X) / m;</div><div class="line">% =============================================================</div><div class="line">end</div></pre></td></tr></table></figure>
 <h4 id="应用-分类"><a href="#应用-分类" class="headerlink" title="应用-分类"></a>应用-分类</h4><p>利用梯度下降算法求得合适的\(\theta\)后，也就得到的模型，就可以应用于test数据的分类了。当然，先得把分类方法实现：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">function p = predict(theta, X)</div><div class="line">%PREDICT Predict whether the label is 0 or 1 using learned logistic </div><div class="line">%regression parameters theta</div><div class="line">%   p = PREDICT(theta, X) computes the predictions for X using a </div><div class="line">%   threshold at 0.5 (i.e., if sigmoid(theta&apos;*x) &gt;= 0.5, predict 1)</div><div class="line"></div><div class="line">m = size(X, 1); % Number of training examples</div><div class="line"></div><div class="line">% You need to return the following variables correctly</div><div class="line">p = zeros(m, 1);</div><div class="line"></div><div class="line">% ====================== YOUR CODE HERE ======================</div><div class="line">% Instructions: Complete the following code to make predictions using</div><div class="line">%               your learned logistic regression parameters. </div><div class="line">%               You should set p to a vector of 0&apos;s and 1&apos;s</div><div class="line">%</div><div class="line"></div><div class="line">p = round(sigmoid(X * theta));</div><div class="line"></div><div class="line">% =========================================================================</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
@@ -317,9 +317,9 @@
 <p>随着特征维度变高变复杂，我们将训练得到更复杂的模型，而越复杂的模型会越可能出现对数据过拟合的现象，引入正则化正是为了克服过拟合的问题。</p>
 <p>额，这一段是我自己编的，准不准确看您的功力来分辨了。</p>
 <p>本练习重点关注正则化，至于特征构造课程已给出实现代码供于参考。</p>
-<h4 id="新的CostFunction"><a href="#新的CostFunction" class="headerlink" title="新的CostFunction"></a>新的CostFunction</h4><p>$$<br>J(\theta) = \frac{1}{m}\sum<em>{i = 1}^m[-y^{(i)}\log(h</em>\theta(x^{(i)})) - (1 - y^{(i)})\log(1 - h<em>\theta(x^{(i)}))] + \frac{\lambda}{2m}\sum</em>{j=1}^n\theta_j^2<br>$$</p>
-<p>对应新的梯度函数<br>$$<br>\frac{\partial J(\theta)}{\partial \theta<em>0} = \frac{1}{m}\sum</em>{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}  \ \ \ \ \ \ \ \ \textrm{for $j = $0}<br>$$</p>
-<p>$$<br>\frac{\partial J(\theta)}{\partial \theta<em>j} = (\frac{1}{m}\sum</em>{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}) + \frac{\lambda}{m}\theta_j  \ \ \ \ \ \ \ \ \textrm{for $j &gt;= $1}<br>$$</p>
+<h4 id="新的CostFunction"><a href="#新的CostFunction" class="headerlink" title="新的CostFunction"></a>新的CostFunction</h4><p>$$<br>J(\theta) = \frac{1}{m}\sum_{i = 1}^m[-y^{(i)}\log(h_\theta(x^{(i)})) - (1 - y^{(i)})\log(1 - h_\theta(x^{(i)}))] + \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2<br>$$</p>
+<p>对应新的梯度函数<br>$$<br>\frac{\partial J(\theta)}{\partial \theta_0} = \frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}  \ \ \ \ \ \ \ \ \textrm{for $j = $0}<br>$$</p>
+<p>$$<br>\frac{\partial J(\theta)}{\partial \theta_j} = (\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}) + \frac{\lambda}{m}\theta_j  \ \ \ \ \ \ \ \ \textrm{for $j &gt;= $1}<br>$$</p>
 <p>这里需要特别注意的是，\(\theta_0\)是不需要做正则化处理的，所以代码实现上也得注意了：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">function [J, grad] = costFunctionReg(theta, X, y, lambda)</div><div class="line">%COSTFUNCTIONREG Compute cost and gradient for logistic regression with regularization</div><div class="line">%   J = COSTFUNCTIONREG(theta, X, y, lambda) computes the cost of using</div><div class="line">%   theta as the parameter for regularized logistic regression and the</div><div class="line">%   gradient of the cost w.r.t. to the parameters. </div><div class="line"></div><div class="line">% Initialize some useful values</div><div class="line">m = length(y); % number of training examples</div><div class="line"></div><div class="line">% You need to return the following variables correctly </div><div class="line">J = 0;</div><div class="line">grad = zeros(size(theta));</div><div class="line"></div><div class="line">% ====================== YOUR CODE HERE ======================</div><div class="line">% Instructions: Compute the cost of a particular choice of theta.</div><div class="line">%               You should set J to the cost.</div><div class="line">%               Compute the partial derivatives and set grad to the partial</div><div class="line">%               derivatives of the cost w.r.t. each parameter in theta</div><div class="line"></div><div class="line">h = sigmoid(X * theta);</div><div class="line">J = (-y' * log(h) - (1 - y)' * log(1 - h)) / m + lambda / 2 / m * (theta' * theta - (theta(1,1))^2);</div><div class="line"></div><div class="line">%Note that you should not regularize the parameter θ0</div><div class="line">grad(1,1) = ((h - y)' * X(:,1)) / m;</div><div class="line"></div><div class="line">n = size(theta);</div><div class="line">% 不是很熟悉matlab，所以用个循环来实现，自我感觉跟清晰易懂一些。</div><div class="line">for i = 2:n</div><div class="line">  grad(i) = ((h - y)' * X(:,i)) / m + lambda / m * theta(i);</div><div class="line">end</div><div class="line">% =============================================================</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
 <p>好了，不管代码美不美，又是一次100分。</p>
@@ -422,10 +422,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -442,7 +442,7 @@
           <div class="site-state-item site-state-posts">
             <a href="/archives">
               <span class="site-state-item-count">8</span>
-              <span class="site-state-item-name">posts</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
@@ -452,7 +452,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -514,7 +514,7 @@
 </div>
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
