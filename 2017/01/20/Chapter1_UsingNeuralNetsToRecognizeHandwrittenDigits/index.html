@@ -135,7 +135,7 @@
 <meta property="og:image" content="http://neuralnetworksanddeeplearning.com/images/mnist_complete_zero.png">
 <meta property="og:image" content="http://neuralnetworksanddeeplearning.com/images/digits_separate.png">
 <meta property="og:image" content="http://neuralnetworksanddeeplearning.com/images/valley.png">
-<meta property="og:updated_time" content="2017-02-14T14:27:16.000Z">
+<meta property="og:updated_time" content="2017-02-14T14:31:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第一章 使用神经网络识别手写体数字">
 <meta name="twitter:description" content="说明：本系列文章不是原创，
@@ -371,7 +371,7 @@
 <h2 id="感知器"><a href="#感知器" class="headerlink" title="感知器"></a>感知器</h2><p>什么是神经网络？首先，让我来阐释一种人工神经元：感知器。感知器最早由科学家<a href="http://en.wikipedia.org/wiki/Frank_Rosenblatt" target="_blank" rel="external">Frank Rosenblatt</a> 受到<a href="http://en.wikipedia.org/wiki/Warren_McCulloch" target="_blank" rel="external">Warren McCulloch</a> 和 <a href="http://en.wikipedia.org/wiki/Walter_Pitts" target="_blank" rel="external">Walter Pitts</a> 的早期<a href="http://scholar.google.ca/scholar?cluster=4035975255085082870" target="_blank" rel="external">工作</a> 的启发，在1950~1960间开发出来。在今天，另一种人工神经元“sigmoid”神经元更广泛应用于现代的神经网络中，也是本书重点要介绍的。虽然我们不用感知器这种神经元，但是为了更好的理解“sigmoid”神经元为什么如此设计，我们还是先花点时间了解一下感知器。</p>
 <p>那么，感知器是如何工作的呢？一个感知器接收几个二进制输入，\(x_1, x_2, \ldots\)，然后输出一个的二进制结果：</p>
 <p><img src="http://neuralnetworksanddeeplearning.com/images/tikz0.png" alt=""></p>
-<p>在上面的图例中，感知器有三个输入, \(x_1,x_2,x_3\)。通常它可以有更少或者更多的输入。Rosenblatt提出一个简单的计算输出的规则。他引入了权重，\(w_1,w_2,\ldots\)，用实数来表示各个输入对输出的重要程度。神经元的输出，0或者1，由输入的加权和值\(\sum_j w_j x_j\)是否大于某个阀值来决定。跟权重一样，阀值同样也是神经元的一个实数参数。用精确的数学表达式表示：<br>$$<br>\begin{eqnarray}<br>  \mbox{output} &amp; = &amp; \left{ \begin{array}{ll}<br>      0 &amp; \mbox{if } \sum_j w_j x_j \leq \mbox{ threshold} \<br>      1 &amp; \mbox{if } \sum_j w_j x_j &gt; \mbox{ threshold}<br>      \end{array} \right.<br>\tag{1}\end{eqnarray}<br>$$<br>这就是感知器的工作方式！</p>
+<p>在上面的图例中，感知器有三个输入, \(x_1,x_2,x_3\)。通常它可以有更少或者更多的输入。Rosenblatt提出一个简单的计算输出的规则。他引入了权重，\(w_1,w_2,\ldots\)，用实数来表示各个输入对输出的重要程度。神经元的输出，0或者1，由输入的加权和值\(\sum_j w_j x_j\)是否大于某个阀值来决定。跟权重一样，阀值同样也是神经元的一个实数参数。用精确的数学表达式表示：<br>$$\begin{eqnarray}<br>  \mbox{output} &amp; = &amp; \left{ \begin{array}{ll}<br>      0 &amp; \mbox{if } \sum_j w_j x_j \leq \mbox{ threshold} \<br>      1 &amp; \mbox{if } \sum_j w_j x_j &gt; \mbox{ threshold}<br>      \end{array} \right.<br>\tag{1}\end{eqnarray}$$<br>这就是感知器的工作方式！</p>
 <p>以上是基本的数学模型。你可以这么来看待一个感知器：通过对证据进行加权然后做出决策的一种设备。让我来举个不是很实际但是很容易理解的例子，紧接着我们会看到一些更实际的例子。假设周末临近，你得到消息你所在的城市将要举行一场奶酪节。你非常喜欢奶酪，正愁要不要去参加。你可能要权衡一下以下因素然后决定去还是不去：</p>
 <ol>
 <li>当天天气是不是够好？</li>
@@ -385,7 +385,7 @@
 <p><img src="http://neuralnetworksanddeeplearning.com/images/tikz1.png" alt=""></p>
 <p>在这个网络中，第一栏的感知器——通常称之为第一层感知器——完成三个很简单的决策，对输入信息进行加权。那么第二层的感知器呢？这一层的每个感知器对第一层的结果进行再次加权。如此，相对于第一层的感知器，第二层可以完成更复杂和更抽象的决策，然后再进一步复杂的决策由第三层感知器完成。这样一来，一个多层的感知器网络可以胜任复杂的决策。</p>
 <p>顺带的，我在定义感知器的时候有说过，感知器只有一个输出。上面图片显示的网络中看上去是多个输出。实际上，它们仍然是一个输出，多个输出箭头表示的是一个输出被后续多个感知器当做输入。相比起来，画一个单个输出然后在拆分显得不简洁。</p>
-<p>让我们来简化一下感知器的描述，条件表达式\(\sum_jw_j x_j &gt; \mbox{threshold}\) 显得繁琐，我们替换两个符号来达到简化的效果。首先，用点积替代\(\sum_jw_j x_j \)，\(w \cdot x \equiv \sum_j w_j x_j\)，\(w\),\(x\)分别表示权重和输入的向量。其次，将阀值移到不等式的左边来，用偏差概念替换原来的阀值概念：\(b \equiv -\mbox{threshold}\)。最后，感知器的规则表达式更新为：<br>$$<br>\begin{eqnarray}<br>  \mbox{output} = \left{<br>    \begin{array}{ll}<br>      0 &amp; \mbox{if } w\cdot x + b \leq 0 \<br>      1 &amp; \mbox{if } w\cdot x + b &gt; 0<br>    \end{array}<br>  \right.<br>\tag{2}\end{eqnarray}<br>$$<br>你可以把偏差理解成，感知器输出1的容易程度，或者使用更偏生物的术语，偏差是衡量感知器激活的容易度。当感知器拥有很大的偏差时，可以很轻易的得到1的输出；而当感知器的偏差趋向负无穷时，就很难得到1的输出了。显然，偏差的引入对感知器的描述来说只是一个小小的变化，但是后续我们可以感受到其带来大大的简化效果。所以，本书以后的内容中我们将不再使用阀值而使用偏差。</p>
+<p>让我们来简化一下感知器的描述，条件表达式\(\sum_jw_j x_j &gt; \mbox{threshold}\) 显得繁琐，我们替换两个符号来达到简化的效果。首先，用点积替代\(\sum_jw_j x_j \)，\(w \cdot x \equiv \sum_j w_j x_j\)，\(w\),\(x\)分别表示权重和输入的向量。其次，将阀值移到不等式的左边来，用偏差概念替换原来的阀值概念：\(b \equiv -\mbox{threshold}\)。最后，感知器的规则表达式更新为：<br>$$\begin{eqnarray}<br>  \mbox{output} = \left{<br>    \begin{array}{ll}<br>      0 &amp; \mbox{if } w\cdot x + b \leq 0 \<br>      1 &amp; \mbox{if } w\cdot x + b &gt; 0<br>    \end{array}<br>  \right.<br>\tag{2}\end{eqnarray}$$<br>你可以把偏差理解成，感知器输出1的容易程度，或者使用更偏生物的术语，偏差是衡量感知器激活的容易度。当感知器拥有很大的偏差时，可以很轻易的得到1的输出；而当感知器的偏差趋向负无穷时，就很难得到1的输出了。显然，偏差的引入对感知器的描述来说只是一个小小的变化，但是后续我们可以感受到其带来大大的简化效果。所以，本书以后的内容中我们将不再使用阀值而使用偏差。</p>
 <p>我已经描述了感知器如何通过了对证据加权来做决策。另外，感知器可以用于计算初级逻辑函数，比如我们通常认为的底层计算，“与”、“或”，“与非”。举个例子，假设我们有一个两输入感知器，权重皆为-2以及全局偏差3。如图：</p>
 <p><img src="http://neuralnetworksanddeeplearning.com/images/tikz2.png" alt=""></p>
 <p>于是，我们可以看到，输入00得到输出1(因为(−2)\∗0+(−2)\∗0+3=3(−2)\∗0+(−2)\∗0+3=3 为正，这里的*表示乘法运算)。同样的，输入01和10得到1，但是输入11则得到0((−2)∗1+(−2)∗1+3=−1(−2)∗1+(−2)∗1+3=−1 为负)。那么，我们的感知器变就成了一个“与非门”。</p>
